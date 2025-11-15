@@ -616,7 +616,7 @@ def load_frequency_words(
 
     frequency_path = Path(frequency_file)
     if not frequency_path.exists():
-        raise FileNotFoundError(f"频率词文件 {frequency_file} 不存在")
+        raise FileNotFoundError(f"頻率詞文件 {frequency_file} 不存在")
 
     with open(frequency_path, "r", encoding="utf-8") as f:
         content = f.read()
@@ -1046,8 +1046,8 @@ def count_word_frequency(
 
     # 如果没有配置词组，创建一个包含所有新闻的虚拟词组
     if not word_groups:
-        print("频率词配置为空，将显示所有新闻")
-        word_groups = [{"required": [], "normal": [], "group_key": "全部新闻"}]
+        print("頻率詞配置為空，將顯示所有新聞")
+        word_groups = [{"required": [], "normal": [], "group_key": "全部新聞"}]
         filter_words = []  # 清空过滤词，显示所有新闻
 
     is_first_today = is_first_crawl_today()
@@ -1088,7 +1088,7 @@ def count_word_frequency(
                             results_to_process[source_id] = filtered_titles
 
                 print(
-                    f"当前榜单模式：最新时间 {latest_time}，筛选出 {sum(len(titles) for titles in results_to_process.values())} 条当前榜单新闻"
+                    f"當前榜單模式：最新時間 {latest_time}，篩選出 {sum(len(titles) for titles in results_to_process.values())} 條當前榜單新聞"
                 )
             else:
                 results_to_process = results
@@ -1101,11 +1101,11 @@ def count_word_frequency(
         all_news_are_new = False
         total_input_news = sum(len(titles) for titles in results.values())
         filter_status = (
-            "全部显示"
-            if len(word_groups) == 1 and word_groups[0]["group_key"] == "全部新闻"
-            else "频率词过滤"
+            "全部顯示"
+            if len(word_groups) == 1 and word_groups[0]["group_key"] == "全部新聞"
+            else "頻率詞過濾"
         )
-        print(f"当日汇总模式：处理 {total_input_news} 条新闻，模式：{filter_status}")
+        print(f"當日匯總模式：處理 {total_input_news} 條新聞，模式：{filter_status}")
 
     word_stats = {}
     total_titles = 0
@@ -1155,8 +1155,8 @@ def count_word_frequency(
                 required_words = group["required"]
                 normal_words = group["normal"]
 
-                # 如果是"全部新闻"模式，所有标题都匹配第一个（唯一的）词组
-                if len(word_groups) == 1 and word_groups[0]["group_key"] == "全部新闻":
+                # 如果是"全部新聞"模式，所有標題都匹配第一個（唯一的）詞組
+                if len(word_groups) == 1 and word_groups[0]["group_key"] == "全部新聞":
                     group_key = group["group_key"]
                     word_stats[group_key]["count"] += 1
                     if source_id not in word_stats[group_key]["titles"]:
@@ -1264,49 +1264,49 @@ def count_word_frequency(
         if is_first_today:
             total_input_news = sum(len(titles) for titles in results.values())
             filter_status = (
-                "全部显示"
-                if len(word_groups) == 1 and word_groups[0]["group_key"] == "全部新闻"
-                else "频率词匹配"
+                "全部顯示"
+                if len(word_groups) == 1 and word_groups[0]["group_key"] == "全部新聞"
+                else "頻率詞匹配"
             )
             print(
-                f"增量模式：当天第一次爬取，{total_input_news} 条新闻中有 {matched_new_count} 条{filter_status}"
+                f"增量模式：當天第一次爬取，{total_input_news} 條新聞中有 {matched_new_count} 條{filter_status}"
             )
         else:
             if new_titles:
                 total_new_count = sum(len(titles) for titles in new_titles.values())
                 filter_status = (
-                    "全部显示"
+                    "全部顯示"
                     if len(word_groups) == 1
-                    and word_groups[0]["group_key"] == "全部新闻"
-                    else "匹配频率词"
+                    and word_groups[0]["group_key"] == "全部新聞"
+                    else "匹配頻率詞"
                 )
                 print(
-                    f"增量模式：{total_new_count} 条新增新闻中，有 {matched_new_count} 条{filter_status}"
+                    f"增量模式：{total_new_count} 條新增新聞中，有 {matched_new_count} 條{filter_status}"
                 )
                 if matched_new_count == 0 and len(word_groups) > 1:
-                    print("增量模式：没有新增新闻匹配频率词，将不会发送通知")
+                    print("增量模式：沒有新增新聞匹配頻率詞，將不會發送通知")
             else:
-                print("增量模式：未检测到新增新闻")
+                print("增量模式：未檢測到新增新聞")
     elif mode == "current":
         total_input_news = sum(len(titles) for titles in results_to_process.values())
         if is_first_today:
             filter_status = (
-                "全部显示"
-                if len(word_groups) == 1 and word_groups[0]["group_key"] == "全部新闻"
-                else "频率词匹配"
+                "全部顯示"
+                if len(word_groups) == 1 and word_groups[0]["group_key"] == "全部新聞"
+                else "頻率詞匹配"
             )
             print(
-                f"当前榜单模式：当天第一次爬取，{total_input_news} 条当前榜单新闻中有 {matched_new_count} 条{filter_status}"
+                f"當前榜單模式：當天第一次爬取，{total_input_news} 條當前榜單新聞中有 {matched_new_count} 條{filter_status}"
             )
         else:
             matched_count = sum(stat["count"] for stat in word_stats.values())
             filter_status = (
-                "全部显示"
-                if len(word_groups) == 1 and word_groups[0]["group_key"] == "全部新闻"
-                else "频率词匹配"
+                "全部顯示"
+                if len(word_groups) == 1 and word_groups[0]["group_key"] == "全部新聞"
+                else "頻率詞匹配"
             )
             print(
-                f"当前榜单模式：{total_input_news} 条当前榜单新闻中有 {matched_count} 条{filter_status}"
+                f"當前榜單模式：{total_input_news} 條當前榜單新聞中有 {matched_count} 條{filter_status}"
             )
 
     stats = []
@@ -1683,15 +1683,16 @@ def render_html_content(
             .header {
                 background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
                 color: white;
-                padding: 32px 24px;
+                padding: 80px 24px 32px 24px;
                 text-align: center;
                 position: relative;
+                min-height: 200px;
             }
             
             .header-logo {
                 position: absolute;
-                top: 16px;
-                left: 16px;
+                top: 20px;
+                left: 20px;
                 z-index: 10;
             }
             
@@ -1706,31 +1707,35 @@ def render_html_content(
             }
             
             .header-logo svg {
-                width: 60px;
-                height: 60px;
+                width: 50px;
+                height: 50px;
                 display: block;
             }
             
             .save-buttons {
                 position: absolute;
-                top: 16px;
-                right: 16px;
+                top: 20px;
+                right: 20px;
                 display: flex;
-                gap: 8px;
+                gap: 6px;
+                flex-wrap: wrap;
+                max-width: 300px;
+                justify-content: flex-end;
             }
             
             .save-btn {
                 background: rgba(255, 255, 255, 0.2);
                 border: 1px solid rgba(255, 255, 255, 0.3);
                 color: white;
-                padding: 8px 16px;
+                padding: 6px 12px;
                 border-radius: 6px;
                 cursor: pointer;
-                font-size: 13px;
+                font-size: 12px;
                 font-weight: 500;
                 transition: all 0.2s ease;
                 backdrop-filter: blur(10px);
                 white-space: nowrap;
+                flex-shrink: 0;
             }
             
             .save-btn:hover {
@@ -1764,9 +1769,10 @@ def render_html_content(
             }
             
             .header-title {
-                font-size: 22px;
+                font-size: 24px;
                 font-weight: 700;
-                margin: 0 0 20px 0;
+                margin: 0 0 24px 0;
+                padding-top: 10px;
             }
             
             .header-info {
@@ -2097,7 +2103,10 @@ def render_html_content(
             
             @media (max-width: 480px) {
                 body { padding: 12px; }
-                .header { padding: 24px 20px; }
+                .header { 
+                    padding: 70px 16px 24px 16px; 
+                    min-height: 180px;
+                }
                 .content { padding: 20px; }
                 .footer { padding: 16px 20px; }
                 .header-info { grid-template-columns: 1fr; gap: 12px; }
@@ -2111,20 +2120,24 @@ def render_html_content(
                     left: 12px;
                 }
                 .header-logo svg {
-                    width: 48px;
-                    height: 48px;
+                    width: 40px;
+                    height: 40px;
                 }
                 .save-buttons {
-                    position: static;
-                    margin-bottom: 16px;
-                    display: flex;
-                    gap: 8px;
-                    justify-content: center;
-                    flex-direction: column;
-                    width: 100%;
+                    position: absolute;
+                    top: 12px;
+                    right: 12px;
+                    max-width: calc(100% - 60px);
+                    gap: 4px;
                 }
                 .save-btn {
-                    width: 100%;
+                    padding: 5px 10px;
+                    font-size: 11px;
+                }
+                .header-title {
+                    font-size: 20px;
+                    margin: 0 0 20px 0;
+                    padding-top: 5px;
                 }
             }
         </style>
@@ -2134,58 +2147,58 @@ def render_html_content(
             <div class="header">
                 <div class="header-logo">
                     <a href="http://flypigai.icareu.tw/" target="_blank" title="FlyPig AI - 專業企業AI與Martech解決方案供應商">
-                        <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                        <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
                             <!-- 飛豬身體 -->
                             <path d="M 80 120 Q 70 100 60 90 Q 50 80 55 70 Q 60 60 70 65 Q 75 68 80 75 Q 85 70 90 65 Q 100 60 105 70 Q 110 80 100 90 Q 90 100 80 120 Z" 
                                   fill="none" 
                                   stroke="#3B82F6" 
-                                  stroke-width="8" 
+                                  stroke-width="7" 
                                   stroke-linecap="round" 
                                   stroke-linejoin="round"/>
                             <!-- 豬頭 -->
-                            <circle cx="70" cy="70" r="3" fill="#3B82F6"/>
+                            <circle cx="70" cy="70" r="4" fill="#3B82F6"/>
                             <!-- 豬耳朵 -->
                             <path d="M 65 60 L 60 50 L 70 55 Z" 
                                   fill="none" 
                                   stroke="#3B82F6" 
-                                  stroke-width="6" 
+                                  stroke-width="5" 
                                   stroke-linecap="round" 
                                   stroke-linejoin="round"/>
                             <path d="M 95 60 L 100 50 L 90 55 Z" 
                                   fill="none" 
                                   stroke="#3B82F6" 
-                                  stroke-width="6" 
+                                  stroke-width="5" 
                                   stroke-linecap="round" 
                                   stroke-linejoin="round"/>
                             <!-- 翅膀 -->
                             <path d="M 90 100 Q 110 85 120 95 Q 130 105 125 115 Q 120 110 110 105 Q 100 100 90 100 Z" 
                                   fill="none" 
                                   stroke="#3B82F6" 
-                                  stroke-width="8" 
+                                  stroke-width="7" 
                                   stroke-linecap="round" 
                                   stroke-linejoin="round"/>
                             <path d="M 110 105 Q 120 100 130 105 Q 140 110 135 120 Q 130 115 120 110 Q 110 105 110 105 Z" 
                                   fill="none" 
                                   stroke="#3B82F6" 
-                                  stroke-width="6" 
+                                  stroke-width="5" 
                                   stroke-linecap="round" 
                                   stroke-linejoin="round"/>
                             <!-- 豬腿 -->
                             <path d="M 75 120 L 75 135" 
                                   fill="none" 
                                   stroke="#3B82F6" 
-                                  stroke-width="6" 
+                                  stroke-width="5" 
                                   stroke-linecap="round"/>
                             <path d="M 85 120 L 85 135" 
                                   fill="none" 
                                   stroke="#3B82F6" 
-                                  stroke-width="6" 
+                                  stroke-width="5" 
                                   stroke-linecap="round"/>
                             <!-- 豬尾巴 -->
                             <path d="M 100 115 Q 110 120 115 125" 
                                   fill="none" 
                                   stroke="#3B82F6" 
-                                  stroke-width="5" 
+                                  stroke-width="4" 
                                   stroke-linecap="round"/>
                         </svg>
                     </a>
@@ -2251,7 +2264,7 @@ def render_html_content(
     if report_data["failed_ids"]:
         html += """
                 <div class="error-section">
-                    <div class="error-title">⚠️ 请求失败的平台</div>
+                    <div class="error-title">⚠️ 請求失敗的平台</div>
                     <ul class="error-list">"""
         for id_value in report_data["failed_ids"]:
             html += f'<li class="error-item">{html_escape(id_value)}</li>'
@@ -2281,12 +2294,12 @@ def render_html_content(
                     <div class="word-header">
                         <div class="word-info">
                             <div class="word-name">{escaped_word}</div>
-                            <div class="word-count {count_class}">{count} 条</div>
+                            <div class="word-count {count_class}">{count} 條</div>
                         </div>
                         <div class="word-index">{i}/{total_count}</div>
                     </div>"""
 
-            # 处理每个词组下的新闻标题，给每条新闻标上序号
+            # 處理每個詞組下的新聞標題，給每條新聞標上序號
             for j, title_data in enumerate(stat["titles"], 1):
                 is_new = title_data.get("is_new", False)
                 new_class = "new" if is_new else ""
@@ -4316,7 +4329,7 @@ class NewsAnalyzer:
                 return None
 
             total_titles = sum(len(titles) for titles in all_results.values())
-            print(f"读取到 {total_titles} 个标题（已按当前监控平台过滤）")
+            print(f"讀取到 {total_titles} 個標題（已按當前監控平台過濾）")
 
             new_titles = detect_latest_new_titles(current_platform_ids)
             word_groups, filter_words = load_frequency_words()
