@@ -396,8 +396,10 @@ class PushRecordManager:
             print(f"保存推送记录失败: {e}")
 
     def is_in_time_range(self, start_time: str, end_time: str) -> bool:
-        """检查当前时间是否在指定时间范围内"""
-        now = get_beijing_time()
+        """检查当前时间是否在指定时间范围内（使用溫哥華時區）"""
+        # 使用溫哥華時區（自動處理 PST/PDT）
+        vancouver_tz = pytz.timezone("America/Vancouver")
+        now = datetime.now(vancouver_tz)
         current_time = now.strftime("%H:%M")
     
         def normalize_time(time_str: str) -> str:
@@ -3400,9 +3402,11 @@ def send_to_notifications(
         time_range_end = CONFIG["PUSH_WINDOW"]["TIME_RANGE"]["END"]
 
         if not push_manager.is_in_time_range(time_range_start, time_range_end):
-            now = get_beijing_time()
+            # 使用溫哥華時區顯示當前時間
+            vancouver_tz = pytz.timezone("America/Vancouver")
+            now = datetime.now(vancouver_tz)
             print(
-                f"推送窗口控制：当前时间 {now.strftime('%H:%M')} 不在推送时间窗口 {time_range_start}-{time_range_end} 内，跳过推送"
+                f"推送窗口控制：當前時間（溫哥華）{now.strftime('%H:%M')} 不在推送時間窗口 {time_range_start}-{time_range_end} 內，跳過推送"
             )
             return results
 

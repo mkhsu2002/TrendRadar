@@ -42,13 +42,14 @@ notification:
   #   - 只想在工作日白天接收推送（如 09:00-18:00）
   #   - 希望在晚上固定时间收到汇总（如 20:00-22:00）
   push_window:
-    enabled: false  # 是否启用推送时间窗口控制，默认关闭
+    enabled: true  # 是否启用推送时间窗口控制
     # 注意：GitHub Actions 执行时间不稳定，时间范围建议至少留足 2 小时
     # 如果想要精准的定时推送，建议使用 Docker 部署在个人服务器上
+    # 溫哥華時間（PST/PDT）：每3小時推送一次（00:00, 03:00, 06:00, 09:00, 12:00, 15:00, 18:00, 21:00）
     time_range:
-      start: "20:00"  # 推送时间窗口开始（北京时间）
-      end: "22:00"    # 推送时间窗口结束（北京时间）
-    once_per_day: true  # 每天在时间窗口内只推送一次，如果 false，则窗口内每次执行都推送
+      start: "00:00"  # 推送时间窗口开始（溫哥華時間）
+      end: "23:59"    # 推送时间窗口结束（溫哥華時間）
+    once_per_day: false  # 每天在时间窗口内只推送一次，如果 false，则窗口内每次执行都推送（設為 false 以配合每3小時推送）
     push_record_retention_days: 7  # 推送记录保留天数
 
   # 请务必妥善保管好 webhooks，不要公开
@@ -82,13 +83,21 @@ platforms:
   - id: "baidu"
     name: "百度热搜"
   - id: "wallstreetcn-hot"
-    name: "华尔街见闻"
+    name: "华尔街见闻 最热"
+  - id: "wallstreetcn-quick"
+    name: "华尔街见闻 快讯"
+  - id: "wallstreetcn-news"
+    name: "华尔街见闻 最新"
   - id: "thepaper"
     name: "澎湃新闻"
   - id: "bilibili-hot-search"
     name: "bilibili 热搜"
   - id: "cls-hot"
     name: "财联社热门"
+  - id: "gelonghui"
+    name: "格隆汇"
+  - id: "xueqiu"
+    name: "雪球"
   - id: "ifeng"
     name: "凤凰网"
   - id: "tieba"
@@ -99,3 +108,19 @@ platforms:
     name: "抖音"
   - id: "zhihu"
     name: "知乎"
+  - id: "ithome"
+    name: "IT之家"
+  - id: "juejin"
+    name: "掘金"
+  - id: "github"
+    name: "GitHub"
+  - id: "hackernews"
+    name: "Hacker News"
+  - id: "solidot"
+    name: "Solidot"
+  - id: "v2ex"
+    name: "V2EX"
+  - id: "nowcoder"
+    name: "牛客网"
+  - id: "pcbeta"
+    name: "远景论坛"
