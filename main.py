@@ -2389,58 +2389,27 @@ def render_html_content(
                 <div class="header-logo">
                     <a href="http://flypigai.icareu.tw/" target="_blank" title="FlyPig AI - 專業企業AI與Martech解決方案供應商">
                         <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
-                            <!-- 飛豬身體 -->
-                            <path d="M 80 120 Q 70 100 60 90 Q 50 80 55 70 Q 60 60 70 65 Q 75 68 80 75 Q 85 70 90 65 Q 100 60 105 70 Q 110 80 100 90 Q 90 100 80 120 Z" 
-                                  fill="none" 
-                                  stroke="#3B82F6" 
-                                  stroke-width="7" 
-                                  stroke-linecap="round" 
-                                  stroke-linejoin="round"/>
-                            <!-- 豬頭 -->
-                            <circle cx="70" cy="70" r="4" fill="#3B82F6"/>
-                            <!-- 豬耳朵 -->
-                            <path d="M 65 60 L 60 50 L 70 55 Z" 
-                                  fill="none" 
-                                  stroke="#3B82F6" 
-                                  stroke-width="5" 
-                                  stroke-linecap="round" 
-                                  stroke-linejoin="round"/>
-                            <path d="M 95 60 L 100 50 L 90 55 Z" 
-                                  fill="none" 
-                                  stroke="#3B82F6" 
-                                  stroke-width="5" 
-                                  stroke-linecap="round" 
-                                  stroke-linejoin="round"/>
+                            <!-- 簡化版飛豬 Logo -->
+                            <!-- 身體 -->
+                            <ellipse cx="100" cy="110" rx="35" ry="25" fill="none" stroke="#3B82F6" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+                            <!-- 頭部 -->
+                            <circle cx="100" cy="75" r="20" fill="none" stroke="#3B82F6" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+                            <!-- 眼睛 -->
+                            <circle cx="95" cy="72" r="2.5" fill="#3B82F6"/>
+                            <circle cx="105" cy="72" r="2.5" fill="#3B82F6"/>
+                            <!-- 鼻子 -->
+                            <ellipse cx="100" cy="80" rx="3" ry="2" fill="#3B82F6"/>
+                            <!-- 耳朵 -->
+                            <path d="M 85 65 Q 80 55 85 50 Q 90 55 85 65" fill="none" stroke="#3B82F6" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M 115 65 Q 120 55 115 50 Q 110 55 115 65" fill="none" stroke="#3B82F6" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
                             <!-- 翅膀 -->
-                            <path d="M 90 100 Q 110 85 120 95 Q 130 105 125 115 Q 120 110 110 105 Q 100 100 90 100 Z" 
-                                  fill="none" 
-                                  stroke="#3B82F6" 
-                                  stroke-width="7" 
-                                  stroke-linecap="round" 
-                                  stroke-linejoin="round"/>
-                            <path d="M 110 105 Q 120 100 130 105 Q 140 110 135 120 Q 130 115 120 110 Q 110 105 110 105 Z" 
-                                  fill="none" 
-                                  stroke="#3B82F6" 
-                                  stroke-width="5" 
-                                  stroke-linecap="round" 
-                                  stroke-linejoin="round"/>
-                            <!-- 豬腿 -->
-                            <path d="M 75 120 L 75 135" 
-                                  fill="none" 
-                                  stroke="#3B82F6" 
-                                  stroke-width="5" 
-                                  stroke-linecap="round"/>
-                            <path d="M 85 120 L 85 135" 
-                                  fill="none" 
-                                  stroke="#3B82F6" 
-                                  stroke-width="5" 
-                                  stroke-linecap="round"/>
-                            <!-- 豬尾巴 -->
-                            <path d="M 100 115 Q 110 120 115 125" 
-                                  fill="none" 
-                                  stroke="#3B82F6" 
-                                  stroke-width="4" 
-                                  stroke-linecap="round"/>
+                            <path d="M 125 100 Q 145 85 150 95 Q 145 105 135 110 Q 125 105 125 100" fill="none" stroke="#3B82F6" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M 135 110 Q 145 105 150 110 Q 145 115 135 115" fill="none" stroke="#3B82F6" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+                            <!-- 腿 -->
+                            <path d="M 90 130 L 90 145" fill="none" stroke="#3B82F6" stroke-width="5" stroke-linecap="round"/>
+                            <path d="M 110 130 L 110 145" fill="none" stroke="#3B82F6" stroke-width="5" stroke-linecap="round"/>
+                            <!-- 尾巴 -->
+                            <path d="M 130 120 Q 140 125 145 130" fill="none" stroke="#3B82F6" stroke-width="4" stroke-linecap="round"/>
                         </svg>
                     </a>
                 </div>
