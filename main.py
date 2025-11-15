@@ -1622,8 +1622,14 @@ def generate_html_report(
 
     report_data = prepare_report_data(stats, failed_ids, new_titles, id_to_name, mode)
 
+    # 獲取 GitHub 倉庫信息（用於觸發更新按鈕）
+    github_repo = os.environ.get("GITHUB_REPOSITORY", "")
+    if not github_repo:
+        # 嘗試從 config 中獲取，如果沒有則使用默認值
+        github_repo = os.environ.get("GITHUB_REPO", "")
+    
     html_content = render_html_content(
-        report_data, total_titles, is_daily_summary, mode, update_info
+        report_data, total_titles, is_daily_summary, mode, update_info, github_repo
     )
 
     with open(file_path, "w", encoding="utf-8") as f:
@@ -1643,6 +1649,7 @@ def render_html_content(
     is_daily_summary: bool = False,
     mode: str = "daily",
     update_info: Optional[Dict] = None,
+    github_repo: Optional[str] = None,
 ) -> str:
     """渲染HTML内容"""
     html = """
@@ -1739,6 +1746,21 @@ def render_html_content(
             .save-btn:disabled {
                 opacity: 0.6;
                 cursor: not-allowed;
+            }
+            
+            .refresh-btn {
+                background: rgba(34, 197, 94, 0.3);
+                border-color: rgba(34, 197, 94, 0.5);
+            }
+            
+            .refresh-btn:hover {
+                background: rgba(34, 197, 94, 0.4);
+                border-color: rgba(34, 197, 94, 0.7);
+            }
+            
+            .refresh-btn:disabled {
+                background: rgba(107, 114, 128, 0.3);
+                border-color: rgba(107, 114, 128, 0.5);
             }
             
             .header-title {
@@ -2169,6 +2191,7 @@ def render_html_content(
                     </a>
                 </div>
                 <div class="save-buttons">
+                    <button class="save-btn refresh-btn" onclick="triggerUpdate()" id="refreshBtn">🔄 立即更新</button>
                     <button class="save-btn" onclick="saveAsImage()">儲存為圖片</button>
                     <button class="save-btn" onclick="saveAsMultipleImages()">分段儲存</button>
                 </div>
@@ -2717,6 +2740,48 @@ def render_html_content(
                     const buttons = document.querySelector('.save-buttons');
                     buttons.style.visibility = 'visible';
                     button.textContent = '保存失败';
+                    setTimeout(() => {
+                        button.textContent = originalText;
+                        button.disabled = false;
+                    }, 2000);
+                }
+            }
+            
+            async function triggerUpdate() {
+                const button = document.getElementById('refreshBtn');
+                const originalText = button.textContent;
+                
+                try {
+                    button.textContent = '啟動中...';
+                    button.disabled = true;
+                    
+                    // 獲取 GitHub 倉庫信息
+                    const githubRepo = '""" + (github_repo if github_repo else "mkhsu2002/TrendRadar") + """';
+                    
+                    // 構建 GitHub Actions workflow_dispatch URL
+                    // 格式: https://github.com/{owner}/{repo}/actions/workflows/{workflow_file}
+                    // 注意：用戶需要在 GitHub Actions 頁面手動點擊 "Run workflow" 按鈕
+                    const workflowUrl = 'https://github.com/' + githubRepo + '/actions/workflows/crawler.yml';
+                    
+                    // 打開新視窗到 GitHub Actions 頁面
+                    // 用戶可以在那裡點擊 "Run workflow" 按鈕手動觸發
+                    const newWindow = window.open(workflowUrl, '_blank');
+                    
+                    if (newWindow) {
+                        button.textContent = '已開啟更新頁面';
+                        setTimeout(() => {
+                            button.textContent = originalText;
+                            button.disabled = false;
+                        }, 3000);
+                    } else {
+                        // 如果彈窗被阻止，直接導航
+                        window.location.href = workflowUrl;
+                        button.textContent = '正在跳轉...';
+                    }
+                    
+                } catch (error) {
+                    console.error('觸發更新失敗:', error);
+                    button.textContent = '操作失敗';
                     setTimeout(() => {
                         button.textContent = originalText;
                         button.disabled = false;
