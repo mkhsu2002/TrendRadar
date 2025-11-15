@@ -1643,6 +1643,72 @@ def generate_html_report(
     return file_path
 
 
+def detect_category(word: str) -> str:
+    """根據關鍵詞自動檢測分類"""
+    word_lower = word.lower()
+    
+    # AI 相關
+    ai_keywords = ['ai', '人工智能', '人工智慧', 'chatgpt', 'openai', 'claude', 'anthropic', 
+                   'gemini', 'deepmind', 'deepseek', 'sora', 'llm', 'gpt', '大模型', '生成式ai', 
+                   'agi', '多模態', '多模态', '機器學習', '机器学习', '深度學習', '深度学习']
+    if any(keyword in word_lower for keyword in ai_keywords):
+        return 'ai'
+    
+    # 科技相關
+    tech_keywords = ['apple', '蘋果', '苹果', 'meta', 'facebook', 'amazon', '亞馬遜', '亚马逊',
+                     'microsoft', '微軟', '微软', 'google', '谷歌', 'tesla', '特斯拉', 'nvidia',
+                     '英偉達', '英伟达', 'amd', 'intel', '英特爾', '英特尔', '台積電', 'tsmc',
+                     '台积电', '聯發科', '联发科', 'mediatek', '華為', '华为', '小米', '字節',
+                     '字节', '大疆', 'dji', '比亞迪', '比亚迪', '騰訊', '腾讯', '阿里巴巴',
+                     '百度', '美團', '美团', '半導體', '半导体', '芯片', '自動駕駛', '自动驾驶',
+                     '機器人', '机器人', '人形機器人', '人形机器人']
+    if any(keyword in word_lower for keyword in tech_keywords):
+        return 'tech'
+    
+    # 財經相關
+    finance_keywords = ['美股', '納斯達克', '纳斯达克', 'nasdaq', '道瓊', '道琼', 'dow jones',
+                        's&p 500', 'fed', '美聯儲', '美联储', '央行', '利率', '通膨', '通縮',
+                        '通缩', '財報', '财报', '季報', '季报', 'ipo', '併購', '并购', '收購',
+                        '收购', '融資', '融资', '創投', '创投', 'vc', '獨角獸', '独角兽']
+    if any(keyword in word_lower for keyword in finance_keywords):
+        return 'finance'
+    
+    # 社會相關
+    social_keywords = ['社會', '社会', '犯罪', '治安', '安全', '教育', '醫療', '医疗', '住房',
+                       '民生', '政策', '事故', '意外']
+    if any(keyword in word_lower for keyword in social_keywords):
+        return 'social'
+    
+    # 災難相關
+    disaster_keywords = ['災難', '灾难', '災害', '灾害', '地震', '颱風', '台风', '洪水', '火災',
+                         '火灾', '爆炸', '車禍', '车祸', '空難', '空难', '疫情', '傳染病', '传染病',
+                         '病毒', '流行病']
+    if any(keyword in word_lower for keyword in disaster_keywords):
+        return 'disaster'
+    
+    # 綜藝相關
+    entertainment_keywords = ['綜藝', '综艺', '娛樂', '娱乐', '明星', '藝人', '艺人', '歌手',
+                             '演員', '演员', '偶像', '節目', '节目', '選秀', '选秀', '真人秀',
+                             '熱搜', '热搜', '話題', '话题', '八卦', '緋聞', '绯闻']
+    if any(keyword in word_lower for keyword in entertainment_keywords):
+        return 'entertainment'
+    
+    return 'other'
+
+def get_category_label(category: str) -> str:
+    """獲取分類標籤文字"""
+    labels = {
+        'ai': 'AI',
+        'tech': '科技',
+        'finance': '財經',
+        'social': '社會',
+        'disaster': '災難',
+        'entertainment': '綜藝',
+        'other': '其他'
+    }
+    return labels.get(category, '其他')
+
+
 def render_html_content(
     report_data: Dict,
     total_titles: int,
@@ -1801,6 +1867,181 @@ def render_html_content(
             
             .content {
                 padding: 24px;
+            }
+            
+            .filter-section {
+                background: #f8f9fa;
+                border-radius: 8px;
+                padding: 16px;
+                margin-bottom: 24px;
+                position: sticky;
+                top: 0;
+                z-index: 100;
+                box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            }
+            
+            .search-box {
+                position: relative;
+                margin-bottom: 12px;
+            }
+            
+            .search-input {
+                width: 100%;
+                padding: 10px 40px 10px 16px;
+                border: 2px solid #e5e7eb;
+                border-radius: 8px;
+                font-size: 14px;
+                transition: all 0.2s ease;
+            }
+            
+            .search-input:focus {
+                outline: none;
+                border-color: #4f46e5;
+                box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+            }
+            
+            .clear-btn {
+                position: absolute;
+                right: 8px;
+                top: 50%;
+                transform: translateY(-50%);
+                background: #9ca3af;
+                color: white;
+                border: none;
+                border-radius: 50%;
+                width: 24px;
+                height: 24px;
+                cursor: pointer;
+                font-size: 14px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                transition: background 0.2s ease;
+            }
+            
+            .clear-btn:hover {
+                background: #6b7280;
+            }
+            
+            .category-tabs {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 8px;
+                margin-bottom: 12px;
+            }
+            
+            .category-tab {
+                padding: 6px 16px;
+                border: 2px solid #e5e7eb;
+                background: white;
+                border-radius: 20px;
+                cursor: pointer;
+                font-size: 13px;
+                font-weight: 500;
+                transition: all 0.2s ease;
+                color: #6b7280;
+            }
+            
+            .category-tab:hover {
+                border-color: #4f46e5;
+                color: #4f46e5;
+            }
+            
+            .category-tab.active {
+                background: #4f46e5;
+                border-color: #4f46e5;
+                color: white;
+            }
+            
+            .quick-nav {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 6px;
+                align-items: center;
+            }
+            
+            .nav-label {
+                font-size: 12px;
+                color: #6b7280;
+                margin-right: 4px;
+            }
+            
+            .nav-link {
+                padding: 4px 12px;
+                background: white;
+                border: 1px solid #e5e7eb;
+                border-radius: 12px;
+                font-size: 12px;
+                color: #4f46e5;
+                text-decoration: none;
+                cursor: pointer;
+                transition: all 0.2s ease;
+            }
+            
+            .nav-link:hover {
+                background: #4f46e5;
+                color: white;
+                border-color: #4f46e5;
+            }
+            
+            .category-badge {
+                display: inline-block;
+                padding: 2px 8px;
+                border-radius: 12px;
+                font-size: 11px;
+                font-weight: 600;
+                margin-right: 8px;
+                text-transform: uppercase;
+            }
+            
+            .category-badge.category-ai {
+                background: rgba(139, 92, 246, 0.15);
+                color: #8b5cf6;
+            }
+            
+            .category-badge.category-tech {
+                background: rgba(59, 130, 246, 0.15);
+                color: #3b82f6;
+            }
+            
+            .category-badge.category-finance {
+                background: rgba(34, 197, 94, 0.15);
+                color: #22c55e;
+            }
+            
+            .category-badge.category-social {
+                background: rgba(249, 115, 22, 0.15);
+                color: #f97316;
+            }
+            
+            .category-badge.category-disaster {
+                background: rgba(239, 68, 68, 0.15);
+                color: #ef4444;
+            }
+            
+            .category-badge.category-entertainment {
+                background: rgba(236, 72, 153, 0.15);
+                color: #ec4899;
+            }
+            
+            .category-badge.category-other {
+                background: rgba(107, 114, 128, 0.15);
+                color: #6b7280;
+            }
+            
+            .word-group.hidden {
+                display: none;
+            }
+            
+            .word-group.highlight {
+                background: #fef3c7;
+                border-radius: 8px;
+                padding: 8px;
+                margin: -8px;
+            }
+            
+            .news-item.hidden {
+                display: none;
             }
             
             .word-group {
@@ -2258,7 +2499,26 @@ def render_html_content(
                 </div>
             </div>
             
-            <div class="content">"""
+            <div class="content">
+                <!-- 分類導航和搜索 -->
+                <div class="filter-section">
+                    <div class="search-box">
+                        <input type="text" id="searchInput" placeholder="🔍 搜尋關鍵詞、平台或標題..." class="search-input">
+                        <button onclick="clearSearch()" class="clear-btn" id="clearBtn" style="display:none;">✕</button>
+                    </div>
+                    <div class="category-tabs" id="categoryTabs">
+                        <button class="category-tab active" data-category="all" onclick="filterByCategory('all')">全部</button>
+                        <button class="category-tab" data-category="tech" onclick="filterByCategory('tech')">科技</button>
+                        <button class="category-tab" data-category="finance" onclick="filterByCategory('finance')">財經</button>
+                        <button class="category-tab" data-category="ai" onclick="filterByCategory('ai')">AI</button>
+                        <button class="category-tab" data-category="social" onclick="filterByCategory('social')">社會</button>
+                        <button class="category-tab" data-category="disaster" onclick="filterByCategory('disaster')">災難</button>
+                        <button class="category-tab" data-category="entertainment" onclick="filterByCategory('entertainment')">綜藝</button>
+                    </div>
+                    <div class="quick-nav" id="quickNav">
+                        <span class="nav-label">快速導航：</span>
+                    </div>
+                </div>"""
 
     # 处理失败ID错误信息
     if report_data["failed_ids"]:
@@ -2288,11 +2548,16 @@ def render_html_content(
                 count_class = ""
 
             escaped_word = html_escape(stat["word"])
+            
+            # 自動分類關鍵詞
+            category = detect_category(escaped_word)
+            category_class = f"category-{category}"
 
             html += f"""
-                <div class="word-group">
+                <div class="word-group {category_class}" data-category="{category}" data-word="{escaped_word.lower()}" id="word-group-{i}">
                     <div class="word-header">
                         <div class="word-info">
+                            <span class="category-badge category-{category}">{get_category_label(category)}</span>
                             <div class="word-name">{escaped_word}</div>
                             <div class="word-count {count_class}">{count} 條</div>
                         </div>
@@ -2304,12 +2569,15 @@ def render_html_content(
                 is_new = title_data.get("is_new", False)
                 new_class = "new" if is_new else ""
 
+                escaped_title = html_escape(title_data.get("title", ""))
+                source_name = html_escape(title_data["source_name"])
+                
                 html += f"""
-                    <div class="news-item {new_class}">
+                    <div class="news-item {new_class}" data-title="{escaped_title.lower()}" data-source="{source_name.lower()}">
                         <div class="news-number">{j}</div>
                         <div class="news-content">
                             <div class="news-header">
-                                <span class="source-name">{html_escape(title_data["source_name"])}</span>"""
+                                <span class="source-name">{source_name}</span>"""
 
                 # 处理排名显示
                 ranks = title_data.get("ranks", [])
@@ -2802,8 +3070,138 @@ def render_html_content(
                 }
             }
             
+            // 分類和搜索功能
+            let currentCategory = 'all';
+            let currentSearch = '';
+            
+            function filterByCategory(category) {
+                currentCategory = category;
+                
+                // 更新按鈕狀態
+                document.querySelectorAll('.category-tab').forEach(tab => {
+                    tab.classList.remove('active');
+                });
+                document.querySelector(`[data-category="${category}"]`).classList.add('active');
+                
+                // 應用篩選
+                applyFilters();
+            }
+            
+            function applyFilters() {
+                const wordGroups = document.querySelectorAll('.word-group');
+                let visibleCount = 0;
+                
+                wordGroups.forEach(group => {
+                    const category = group.getAttribute('data-category');
+                    const word = group.getAttribute('data-word') || '';
+                    const newsItems = group.querySelectorAll('.news-item');
+                    
+                    // 分類篩選
+                    const categoryMatch = currentCategory === 'all' || category === currentCategory;
+                    
+                    // 搜索篩選
+                    let searchMatch = true;
+                    if (currentSearch) {
+                        const searchLower = currentSearch.toLowerCase();
+                        searchMatch = word.includes(searchLower) || 
+                                     Array.from(newsItems).some(item => {
+                                         const title = item.getAttribute('data-title') || '';
+                                         const source = item.getAttribute('data-source') || '';
+                                         return title.includes(searchLower) || source.includes(searchLower);
+                                     });
+                    }
+                    
+                    // 顯示/隱藏詞組
+                    if (categoryMatch && searchMatch) {
+                        group.classList.remove('hidden');
+                        visibleCount++;
+                        
+                        // 顯示匹配的新聞項目
+                        newsItems.forEach(item => {
+                            if (currentSearch) {
+                                const title = item.getAttribute('data-title') || '';
+                                const source = item.getAttribute('data-source') || '';
+                                const searchLower = currentSearch.toLowerCase();
+                                if (title.includes(searchLower) || source.includes(searchLower) || 
+                                    word.includes(searchLower)) {
+                                    item.classList.remove('hidden');
+                                } else {
+                                    item.classList.add('hidden');
+                                }
+                            } else {
+                                item.classList.remove('hidden');
+                            }
+                        });
+                    } else {
+                        group.classList.add('hidden');
+                    }
+                });
+                
+                // 更新快速導航
+                updateQuickNav();
+            }
+            
+            function updateQuickNav() {
+                const quickNav = document.getElementById('quickNav');
+                const visibleGroups = Array.from(document.querySelectorAll('.word-group:not(.hidden)'));
+                
+                if (visibleGroups.length === 0) {
+                    quickNav.innerHTML = '<span class="nav-label">無匹配結果</span>';
+                    return;
+                }
+                
+                let navHtml = '<span class="nav-label">快速導航：</span>';
+                visibleGroups.slice(0, 10).forEach((group, index) => {
+                    const word = group.querySelector('.word-name')?.textContent || '';
+                    const id = group.getAttribute('id') || '';
+                    if (word && id) {
+                        navHtml += `<a href="#${id}" class="nav-link" onclick="scrollToGroup('${id}')">${word}</a>`;
+                    }
+                });
+                
+                quickNav.innerHTML = navHtml;
+            }
+            
+            function scrollToGroup(id) {
+                const element = document.getElementById(id);
+                if (element) {
+                    element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    element.classList.add('highlight');
+                    setTimeout(() => element.classList.remove('highlight'), 2000);
+                }
+            }
+            
+            // 搜索功能
+            const searchInput = document.getElementById('searchInput');
+            const clearBtn = document.getElementById('clearBtn');
+            
+            if (searchInput) {
+                searchInput.addEventListener('input', function(e) {
+                    currentSearch = e.target.value;
+                    clearBtn.style.display = currentSearch ? 'flex' : 'none';
+                    applyFilters();
+                });
+                
+                searchInput.addEventListener('keydown', function(e) {
+                    if (e.key === 'Escape') {
+                        clearSearch();
+                    }
+                });
+            }
+            
+            function clearSearch() {
+                if (searchInput) {
+                    searchInput.value = '';
+                    currentSearch = '';
+                    clearBtn.style.display = 'none';
+                    applyFilters();
+                }
+            }
+            
+            // 初始化快速導航
             document.addEventListener('DOMContentLoaded', function() {
                 window.scrollTo(0, 0);
+                updateQuickNav();
             });
         </script>
     </body>
