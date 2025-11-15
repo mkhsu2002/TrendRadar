@@ -1605,14 +1605,14 @@ def generate_html_report(
     is_daily_summary: bool = False,
     update_info: Optional[Dict] = None,
 ) -> str:
-    """生成HTML报告"""
+    """生成HTML報告"""
     if is_daily_summary:
         if mode == "current":
-            filename = "当前榜单汇总.html"
+            filename = "當前榜單匯總.html"
         elif mode == "incremental":
-            filename = "当日增量.html"
+            filename = "當日增量.html"
         else:
-            filename = "当日汇总.html"
+            filename = "當日匯總.html"
     else:
         filename = f"{format_time_filename()}.html"
 
@@ -1649,7 +1649,7 @@ def render_html_content(
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>热点新闻分析</title>
+        <title>熱點新聞分析</title>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" integrity="sha512-BNaRQnYJYiPSqHHDb58B0yaPfCu+Wgds8Gp/gU33kqBtgNS4tSPHuGibyoeqMV/TJlSKda6FXzoEyYGjTe+vXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
         <style>
             * { box-sizing: border-box; }
@@ -1677,6 +1677,29 @@ def render_html_content(
                 padding: 32px 24px;
                 text-align: center;
                 position: relative;
+            }
+            
+            .header-logo {
+                position: absolute;
+                top: 16px;
+                left: 16px;
+                z-index: 10;
+            }
+            
+            .header-logo a {
+                display: block;
+                text-decoration: none;
+                transition: opacity 0.2s ease;
+            }
+            
+            .header-logo a:hover {
+                opacity: 0.8;
+            }
+            
+            .header-logo svg {
+                width: 60px;
+                height: 60px;
+                display: block;
             }
             
             .save-buttons {
@@ -2059,6 +2082,14 @@ def render_html_content(
                 .news-item { gap: 8px; }
                 .new-item { gap: 8px; }
                 .news-number { width: 20px; height: 20px; font-size: 12px; }
+                .header-logo {
+                    top: 12px;
+                    left: 12px;
+                }
+                .header-logo svg {
+                    width: 48px;
+                    height: 48px;
+                }
                 .save-buttons {
                     position: static;
                     margin-bottom: 16px;
@@ -2077,50 +2108,108 @@ def render_html_content(
     <body>
         <div class="container">
             <div class="header">
-                <div class="save-buttons">
-                    <button class="save-btn" onclick="saveAsImage()">保存为图片</button>
-                    <button class="save-btn" onclick="saveAsMultipleImages()">分段保存</button>
+                <div class="header-logo">
+                    <a href="http://flypigai.icareu.tw/" target="_blank" title="FlyPig AI - 專業企業AI與Martech解決方案供應商">
+                        <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                            <!-- 飛豬身體 -->
+                            <path d="M 80 120 Q 70 100 60 90 Q 50 80 55 70 Q 60 60 70 65 Q 75 68 80 75 Q 85 70 90 65 Q 100 60 105 70 Q 110 80 100 90 Q 90 100 80 120 Z" 
+                                  fill="none" 
+                                  stroke="#3B82F6" 
+                                  stroke-width="8" 
+                                  stroke-linecap="round" 
+                                  stroke-linejoin="round"/>
+                            <!-- 豬頭 -->
+                            <circle cx="70" cy="70" r="3" fill="#3B82F6"/>
+                            <!-- 豬耳朵 -->
+                            <path d="M 65 60 L 60 50 L 70 55 Z" 
+                                  fill="none" 
+                                  stroke="#3B82F6" 
+                                  stroke-width="6" 
+                                  stroke-linecap="round" 
+                                  stroke-linejoin="round"/>
+                            <path d="M 95 60 L 100 50 L 90 55 Z" 
+                                  fill="none" 
+                                  stroke="#3B82F6" 
+                                  stroke-width="6" 
+                                  stroke-linecap="round" 
+                                  stroke-linejoin="round"/>
+                            <!-- 翅膀 -->
+                            <path d="M 90 100 Q 110 85 120 95 Q 130 105 125 115 Q 120 110 110 105 Q 100 100 90 100 Z" 
+                                  fill="none" 
+                                  stroke="#3B82F6" 
+                                  stroke-width="8" 
+                                  stroke-linecap="round" 
+                                  stroke-linejoin="round"/>
+                            <path d="M 110 105 Q 120 100 130 105 Q 140 110 135 120 Q 130 115 120 110 Q 110 105 110 105 Z" 
+                                  fill="none" 
+                                  stroke="#3B82F6" 
+                                  stroke-width="6" 
+                                  stroke-linecap="round" 
+                                  stroke-linejoin="round"/>
+                            <!-- 豬腿 -->
+                            <path d="M 75 120 L 75 135" 
+                                  fill="none" 
+                                  stroke="#3B82F6" 
+                                  stroke-width="6" 
+                                  stroke-linecap="round"/>
+                            <path d="M 85 120 L 85 135" 
+                                  fill="none" 
+                                  stroke="#3B82F6" 
+                                  stroke-width="6" 
+                                  stroke-linecap="round"/>
+                            <!-- 豬尾巴 -->
+                            <path d="M 100 115 Q 110 120 115 125" 
+                                  fill="none" 
+                                  stroke="#3B82F6" 
+                                  stroke-width="5" 
+                                  stroke-linecap="round"/>
+                        </svg>
+                    </a>
                 </div>
-                <div class="header-title">热点新闻分析</div>
+                <div class="save-buttons">
+                    <button class="save-btn" onclick="saveAsImage()">儲存為圖片</button>
+                    <button class="save-btn" onclick="saveAsMultipleImages()">分段儲存</button>
+                </div>
+                <div class="header-title">熱點新聞分析</div>
                 <div class="header-info">
                     <div class="info-item">
-                        <span class="info-label">报告类型</span>
+                        <span class="info-label">報告類型</span>
                         <span class="info-value">"""
 
-    # 处理报告类型显示
+    # 處理報告類型顯示
     if is_daily_summary:
         if mode == "current":
-            html += "当前榜单"
+            html += "當前榜單"
         elif mode == "incremental":
             html += "增量模式"
         else:
-            html += "当日汇总"
+            html += "當日匯總"
     else:
-        html += "实时分析"
+        html += "即時分析"
 
     html += """</span>
                     </div>
                     <div class="info-item">
-                        <span class="info-label">新闻总数</span>
+                        <span class="info-label">新聞總數</span>
                         <span class="info-value">"""
 
-    html += f"{total_titles} 条"
+    html += f"{total_titles} 條"
 
-    # 计算筛选后的热点新闻数量
+    # 計算篩選後的熱點新聞數量
     hot_news_count = sum(len(stat["titles"]) for stat in report_data["stats"])
 
     html += """</span>
                     </div>
                     <div class="info-item">
-                        <span class="info-label">热点新闻</span>
+                        <span class="info-label">熱點新聞</span>
                         <span class="info-value">"""
 
-    html += f"{hot_news_count} 条"
+    html += f"{hot_news_count} 條"
 
     html += """</span>
                     </div>
                     <div class="info-item">
-                        <span class="info-label">生成时间</span>
+                        <span class="info-label">生成時間</span>
                         <span class="info-value">"""
 
     now = get_beijing_time()
@@ -2250,7 +2339,7 @@ def render_html_content(
     if report_data["new_titles"]:
         html += f"""
                 <div class="new-section">
-                    <div class="new-section-title">本次新增热点 (共 {report_data['total_new_count']} 条)</div>"""
+                    <div class="new-section-title">本次新增熱點 (共 {report_data['total_new_count']} 條)</div>"""
 
         for source_data in report_data["new_titles"]:
             escaped_source = html_escape(source_data["source_name"])
@@ -2375,7 +2464,7 @@ def render_html_content(
                     
                     const link = document.createElement('a');
                     const now = new Date();
-                    const filename = `TrendRadar_热点新闻分析_${now.getFullYear()}${String(now.getMonth() + 1).padStart(2, '0')}${String(now.getDate()).padStart(2, '0')}_${String(now.getHours()).padStart(2, '0')}${String(now.getMinutes()).padStart(2, '0')}.png`;
+                    const filename = `TrendRadar_熱點新聞分析_${now.getFullYear()}${String(now.getMonth() + 1).padStart(2, '0')}${String(now.getDate()).padStart(2, '0')}_${String(now.getHours()).padStart(2, '0')}${String(now.getMinutes()).padStart(2, '0')}.png`;
                     
                     link.download = filename;
                     link.href = canvas.toDataURL('image/png', 1.0);
@@ -2601,7 +2690,7 @@ def render_html_content(
                     
                     // 下载所有图片
                     const now = new Date();
-                    const baseFilename = `TrendRadar_热点新闻分析_${now.getFullYear()}${String(now.getMonth() + 1).padStart(2, '0')}${String(now.getDate()).padStart(2, '0')}_${String(now.getHours()).padStart(2, '0')}${String(now.getMinutes()).padStart(2, '0')}`;
+                    const baseFilename = `TrendRadar_熱點新聞分析_${now.getFullYear()}${String(now.getMonth() + 1).padStart(2, '0')}${String(now.getDate()).padStart(2, '0')}_${String(now.getHours()).padStart(2, '0')}${String(now.getMinutes()).padStart(2, '0')}`;
                     
                     for (let i = 0; i < images.length; i++) {
                         const link = document.createElement('a');
@@ -2651,7 +2740,7 @@ def render_feishu_content(
     text_content = ""
 
     if report_data["stats"]:
-        text_content += f"📊 **热点词汇统计**\n\n"
+        text_content += f"📊 **熱點詞彙統計**\n\n"
 
     total_count = len(report_data["stats"])
 
@@ -2682,24 +2771,24 @@ def render_feishu_content(
 
     if not text_content:
         if mode == "incremental":
-            mode_text = "增量模式下暂无新增匹配的热点词汇"
+            mode_text = "增量模式下暫無新增匹配的熱點詞彙"
         elif mode == "current":
-            mode_text = "当前榜单模式下暂无匹配的热点词汇"
+            mode_text = "當前榜單模式下暫無匹配的熱點詞彙"
         else:
-            mode_text = "暂无匹配的热点词汇"
+            mode_text = "暫無匹配的熱點詞彙"
         text_content = f"📭 {mode_text}\n\n"
 
     if report_data["new_titles"]:
-        if text_content and "暂无匹配" not in text_content:
+        if text_content and "暫無匹配" not in text_content:
             text_content += f"\n{CONFIG['FEISHU_MESSAGE_SEPARATOR']}\n\n"
 
         text_content += (
-            f"🆕 **本次新增热点新闻** (共 {report_data['total_new_count']} 条)\n\n"
+            f"🆕 **本次新增熱點新聞** (共 {report_data['total_new_count']} 條)\n\n"
         )
 
         for source_data in report_data["new_titles"]:
             text_content += (
-                f"**{source_data['source_name']}** ({len(source_data['titles'])} 条):\n"
+                f"**{source_data['source_name']}** ({len(source_data['titles'])} 條):\n"
             )
 
             for j, title_data in enumerate(source_data["titles"], 1):
@@ -2713,16 +2802,16 @@ def render_feishu_content(
             text_content += "\n"
 
     if report_data["failed_ids"]:
-        if text_content and "暂无匹配" not in text_content:
+        if text_content and "暫無匹配" not in text_content:
             text_content += f"\n{CONFIG['FEISHU_MESSAGE_SEPARATOR']}\n\n"
 
-        text_content += "⚠️ **数据获取失败的平台：**\n\n"
+        text_content += "⚠️ **資料獲取失敗的平台：**\n\n"
         for i, id_value in enumerate(report_data["failed_ids"], 1):
             text_content += f"  • <font color='red'>{id_value}</font>\n"
 
     now = get_beijing_time()
     text_content += (
-        f"\n\n<font color='grey'>更新时间：{now.strftime('%Y-%m-%d %H:%M:%S')}</font>"
+        f"\n\n<font color='grey'>更新時間：{now.strftime('%Y-%m-%d %H:%M:%S')}</font>"
     )
 
     if update_info:
@@ -2742,14 +2831,14 @@ def render_dingtalk_content(
     )
     now = get_beijing_time()
 
-    text_content += f"**总新闻数：** {total_titles}\n\n"
-    text_content += f"**时间：** {now.strftime('%Y-%m-%d %H:%M:%S')}\n\n"
-    text_content += f"**类型：** 热点分析报告\n\n"
+    text_content += f"**總新聞數：** {total_titles}\n\n"
+    text_content += f"**時間：** {now.strftime('%Y-%m-%d %H:%M:%S')}\n\n"
+    text_content += f"**類型：** 熱點分析報告\n\n"
 
     text_content += "---\n\n"
 
     if report_data["stats"]:
-        text_content += f"📊 **热点词汇统计**\n\n"
+        text_content += f"📊 **熱點詞彙統計**\n\n"
 
         total_count = len(report_data["stats"])
 
@@ -2780,23 +2869,23 @@ def render_dingtalk_content(
 
     if not report_data["stats"]:
         if mode == "incremental":
-            mode_text = "增量模式下暂无新增匹配的热点词汇"
+            mode_text = "增量模式下暫無新增匹配的熱點詞彙"
         elif mode == "current":
-            mode_text = "当前榜单模式下暂无匹配的热点词汇"
+            mode_text = "當前榜單模式下暫無匹配的熱點詞彙"
         else:
-            mode_text = "暂无匹配的热点词汇"
+            mode_text = "暫無匹配的熱點詞彙"
         text_content += f"📭 {mode_text}\n\n"
 
     if report_data["new_titles"]:
-        if text_content and "暂无匹配" not in text_content:
+        if text_content and "暫無匹配" not in text_content:
             text_content += f"\n---\n\n"
 
         text_content += (
-            f"🆕 **本次新增热点新闻** (共 {report_data['total_new_count']} 条)\n\n"
+            f"🆕 **本次新增熱點新聞** (共 {report_data['total_new_count']} 條)\n\n"
         )
 
         for source_data in report_data["new_titles"]:
-            text_content += f"**{source_data['source_name']}** ({len(source_data['titles'])} 条):\n\n"
+            text_content += f"**{source_data['source_name']}** ({len(source_data['titles'])} 條):\n\n"
 
             for j, title_data in enumerate(source_data["titles"], 1):
                 title_data_copy = title_data.copy()
@@ -2809,14 +2898,14 @@ def render_dingtalk_content(
             text_content += "\n"
 
     if report_data["failed_ids"]:
-        if text_content and "暂无匹配" not in text_content:
+        if text_content and "暫無匹配" not in text_content:
             text_content += f"\n---\n\n"
 
-        text_content += "⚠️ **数据获取失败的平台：**\n\n"
+        text_content += "⚠️ **資料獲取失敗的平台：**\n\n"
         for i, id_value in enumerate(report_data["failed_ids"], 1):
             text_content += f"  • **{id_value}**\n"
 
-    text_content += f"\n\n> 更新时间：{now.strftime('%Y-%m-%d %H:%M:%S')}"
+    text_content += f"\n\n> 更新時間：{now.strftime('%Y-%m-%d %H:%M:%S')}"
 
     if update_info:
         text_content += f"\n> TrendRadar 发现新版本 **{update_info['remote_version']}**，当前 **{update_info['current_version']}**"
@@ -2851,30 +2940,30 @@ def split_content_into_batches(
 
     base_header = ""
     if format_type == "wework":
-        base_header = f"**总新闻数：** {total_titles}\n\n\n\n"
+        base_header = f"**總新聞數：** {total_titles}\n\n\n\n"
     elif format_type == "telegram":
-        base_header = f"总新闻数： {total_titles}\n\n"
+        base_header = f"總新聞數： {total_titles}\n\n"
     elif format_type == "ntfy":
-        base_header = f"**总新闻数：** {total_titles}\n\n"
+        base_header = f"**總新聞數：** {total_titles}\n\n"
     elif format_type == "feishu":
         base_header = ""
     elif format_type == "dingtalk":
-        base_header = f"**总新闻数：** {total_titles}\n\n"
-        base_header += f"**时间：** {now.strftime('%Y-%m-%d %H:%M:%S')}\n\n"
-        base_header += f"**类型：** 热点分析报告\n\n"
+        base_header = f"**總新聞數：** {total_titles}\n\n"
+        base_header += f"**時間：** {now.strftime('%Y-%m-%d %H:%M:%S')}\n\n"
+        base_header += f"**類型：** 熱點分析報告\n\n"
         base_header += "---\n\n"
 
     base_footer = ""
     if format_type == "wework":
-        base_footer = f"\n\n\n> 更新时间：{now.strftime('%Y-%m-%d %H:%M:%S')}"
+        base_footer = f"\n\n\n> 更新時間：{now.strftime('%Y-%m-%d %H:%M:%S')}"
         if update_info:
             base_footer += f"\n> TrendRadar 发现新版本 **{update_info['remote_version']}**，当前 **{update_info['current_version']}**"
     elif format_type == "telegram":
-        base_footer = f"\n\n更新时间：{now.strftime('%Y-%m-%d %H:%M:%S')}"
+        base_footer = f"\n\n更新時間：{now.strftime('%Y-%m-%d %H:%M:%S')}"
         if update_info:
             base_footer += f"\nTrendRadar 发现新版本 {update_info['remote_version']}，当前 {update_info['current_version']}"
     elif format_type == "ntfy":
-        base_footer = f"\n\n> 更新时间：{now.strftime('%Y-%m-%d %H:%M:%S')}"
+        base_footer = f"\n\n> 更新時間：{now.strftime('%Y-%m-%d %H:%M:%S')}"
         if update_info:
             base_footer += f"\n> TrendRadar 发现新版本 **{update_info['remote_version']}**，当前 **{update_info['current_version']}**"
     elif format_type == "feishu":
@@ -2882,22 +2971,22 @@ def split_content_into_batches(
         if update_info:
             base_footer += f"\n<font color='grey'>TrendRadar 发现新版本 {update_info['remote_version']}，当前 {update_info['current_version']}</font>"
     elif format_type == "dingtalk":
-        base_footer = f"\n\n> 更新时间：{now.strftime('%Y-%m-%d %H:%M:%S')}"
+        base_footer = f"\n\n> 更新時間：{now.strftime('%Y-%m-%d %H:%M:%S')}"
         if update_info:
             base_footer += f"\n> TrendRadar 发现新版本 **{update_info['remote_version']}**，当前 **{update_info['current_version']}**"
 
     stats_header = ""
     if report_data["stats"]:
         if format_type == "wework":
-            stats_header = f"📊 **热点词汇统计**\n\n"
+            stats_header = f"📊 **熱點詞彙統計**\n\n"
         elif format_type == "telegram":
-            stats_header = f"📊 热点词汇统计\n\n"
+            stats_header = f"📊 熱點詞彙統計\n\n"
         elif format_type == "ntfy":
-            stats_header = f"📊 **热点词汇统计**\n\n"
+            stats_header = f"📊 **熱點詞彙統計**\n\n"
         elif format_type == "feishu":
-            stats_header = f"📊 **热点词汇统计**\n\n"
+            stats_header = f"📊 **熱點詞彙統計**\n\n"
         elif format_type == "dingtalk":
-            stats_header = f"📊 **热点词汇统计**\n\n"
+            stats_header = f"📊 **熱點詞彙統計**\n\n"
 
     current_batch = base_header
     current_batch_has_content = False
@@ -2908,17 +2997,17 @@ def split_content_into_batches(
         and not report_data["failed_ids"]
     ):
         if mode == "incremental":
-            mode_text = "增量模式下暂无新增匹配的热点词汇"
+            mode_text = "增量模式下暫無新增匹配的熱點詞彙"
         elif mode == "current":
-            mode_text = "当前榜单模式下暂无匹配的热点词汇"
+            mode_text = "當前榜單模式下暫無匹配的熱點詞彙"
         else:
-            mode_text = "暂无匹配的热点词汇"
+            mode_text = "暫無匹配的熱點詞彙"
         simple_content = f"📭 {mode_text}\n\n"
         final_content = base_header + simple_content + base_footer
         batches.append(final_content)
         return batches
 
-    # 处理热点词汇统计
+    # 處理熱點詞彙統計
     if report_data["stats"]:
         total_count = len(report_data["stats"])
 
@@ -3110,17 +3199,17 @@ def split_content_into_batches(
     if report_data["new_titles"]:
         new_header = ""
         if format_type == "wework":
-            new_header = f"\n\n\n\n🆕 **本次新增热点新闻** (共 {report_data['total_new_count']} 条)\n\n"
+            new_header = f"\n\n\n\n🆕 **本次新增熱點新聞** (共 {report_data['total_new_count']} 條)\n\n"
         elif format_type == "telegram":
             new_header = (
-                f"\n\n🆕 本次新增热点新闻 (共 {report_data['total_new_count']} 条)\n\n"
+                f"\n\n🆕 本次新增熱點新聞 (共 {report_data['total_new_count']} 條)\n\n"
             )
         elif format_type == "ntfy":
-            new_header = f"\n\n🆕 **本次新增热点新闻** (共 {report_data['total_new_count']} 条)\n\n"
+            new_header = f"\n\n🆕 **本次新增熱點新聞** (共 {report_data['total_new_count']} 條)\n\n"
         elif format_type == "feishu":
-            new_header = f"\n{CONFIG['FEISHU_MESSAGE_SEPARATOR']}\n\n🆕 **本次新增热点新闻** (共 {report_data['total_new_count']} 条)\n\n"
+            new_header = f"\n{CONFIG['FEISHU_MESSAGE_SEPARATOR']}\n\n🆕 **本次新增熱點新聞** (共 {report_data['total_new_count']} 條)\n\n"
         elif format_type == "dingtalk":
-            new_header = f"\n---\n\n🆕 **本次新增热点新闻** (共 {report_data['total_new_count']} 条)\n\n"
+            new_header = f"\n---\n\n🆕 **本次新增熱點新聞** (共 {report_data['total_new_count']} 條)\n\n"
 
         test_content = current_batch + new_header
         if (
@@ -3139,15 +3228,15 @@ def split_content_into_batches(
         for source_data in report_data["new_titles"]:
             source_header = ""
             if format_type == "wework":
-                source_header = f"**{source_data['source_name']}** ({len(source_data['titles'])} 条):\n\n"
+                source_header = f"**{source_data['source_name']}** ({len(source_data['titles'])} 條):\n\n"
             elif format_type == "telegram":
-                source_header = f"{source_data['source_name']} ({len(source_data['titles'])} 条):\n\n"
+                source_header = f"{source_data['source_name']} ({len(source_data['titles'])} 條):\n\n"
             elif format_type == "ntfy":
-                source_header = f"**{source_data['source_name']}** ({len(source_data['titles'])} 条):\n\n"
+                source_header = f"**{source_data['source_name']}** ({len(source_data['titles'])} 條):\n\n"
             elif format_type == "feishu":
-                source_header = f"**{source_data['source_name']}** ({len(source_data['titles'])} 条):\n\n"
+                source_header = f"**{source_data['source_name']}** ({len(source_data['titles'])} 條):\n\n"
             elif format_type == "dingtalk":
-                source_header = f"**{source_data['source_name']}** ({len(source_data['titles'])} 条):\n\n"
+                source_header = f"**{source_data['source_name']}** ({len(source_data['titles'])} 條):\n\n"
 
             # 构建第一条新增新闻
             first_news_line = ""
@@ -3240,15 +3329,15 @@ def split_content_into_batches(
     if report_data["failed_ids"]:
         failed_header = ""
         if format_type == "wework":
-            failed_header = f"\n\n\n\n⚠️ **数据获取失败的平台：**\n\n"
+            failed_header = f"\n\n\n\n⚠️ **資料獲取失敗的平台：**\n\n"
         elif format_type == "telegram":
-            failed_header = f"\n\n⚠️ 数据获取失败的平台：\n\n"
+            failed_header = f"\n\n⚠️ 資料獲取失敗的平台：\n\n"
         elif format_type == "ntfy":
-            failed_header = f"\n\n⚠️ **数据获取失败的平台：**\n\n"
+            failed_header = f"\n\n⚠️ **資料獲取失敗的平台：**\n\n"
         elif format_type == "feishu":
-            failed_header = f"\n{CONFIG['FEISHU_MESSAGE_SEPARATOR']}\n\n⚠️ **数据获取失败的平台：**\n\n"
+            failed_header = f"\n{CONFIG['FEISHU_MESSAGE_SEPARATOR']}\n\n⚠️ **資料獲取失敗的平台：**\n\n"
         elif format_type == "dingtalk":
-            failed_header = f"\n---\n\n⚠️ **数据获取失败的平台：**\n\n"
+            failed_header = f"\n---\n\n⚠️ **資料獲取失敗的平台：**\n\n"
 
         test_content = current_batch + failed_header
         if (
@@ -3294,7 +3383,7 @@ def split_content_into_batches(
 def send_to_notifications(
     stats: List[Dict],
     failed_ids: Optional[List] = None,
-    report_type: str = "当日汇总",
+    report_type: str = "當日匯總",
     new_titles: Optional[Dict] = None,
     id_to_name: Optional[Dict] = None,
     update_info: Optional[Dict] = None,
@@ -3448,9 +3537,9 @@ def send_to_feishu(
         if len(batches) > 1:
             batch_header = f"**[第 {i}/{len(batches)} 批次]**\n\n"
             # 将批次标识插入到适当位置（在统计标题之后）
-            if "📊 **热点词汇统计**" in batch_content:
+            if "📊 **熱點詞彙統計**" in batch_content:
                 batch_content = batch_content.replace(
-                    "📊 **热点词汇统计**\n\n", f"📊 **热点词汇统计** {batch_header}"
+                    "📊 **熱點詞彙統計**\n\n", f"📊 **熱點詞彙統計** {batch_header}"
                 )
             else:
                 # 如果没有统计标题，直接在开头添加
@@ -3538,9 +3627,9 @@ def send_to_dingtalk(
         if len(batches) > 1:
             batch_header = f"**[第 {i}/{len(batches)} 批次]**\n\n"
             # 将批次标识插入到适当位置（在标题之后）
-            if "📊 **热点词汇统计**" in batch_content:
+            if "📊 **熱點詞彙統計**" in batch_content:
                 batch_content = batch_content.replace(
-                    "📊 **热点词汇统计**\n\n", f"📊 **热点词汇统计** {batch_header}\n\n"
+                    "📊 **熱點詞彙統計**\n\n", f"📊 **熱點詞彙統計** {batch_header}\n\n"
                 )
             else:
                 # 如果没有统计标题，直接在开头添加
@@ -3785,14 +3874,14 @@ def send_to_email(
         msg["Date"] = formatdate(localtime=True)
         msg["Message-ID"] = make_msgid()
 
-        # 添加纯文本部分（作为备选）
+        # 添加純文字部分（作為備選）
         text_content = f"""
-TrendRadar 热点分析报告
+TrendRadar 熱點分析報告
 ========================
-报告类型：{report_type}
-生成时间：{now.strftime('%Y-%m-%d %H:%M:%S')}
+報告類型：{report_type}
+生成時間：{now.strftime('%Y-%m-%d %H:%M:%S')}
 
-请使用支持HTML的邮件客户端查看完整报告内容。
+請使用支援HTML的郵件客戶端查看完整報告內容。
         """
         text_part = MIMEText(text_content, "plain", "utf-8")
         msg.attach(text_part)
@@ -3870,11 +3959,11 @@ def send_to_ntfy(
     """发送到ntfy（支持分批发送，严格遵守4KB限制）"""
     # 避免 HTTP header 编码问题
     report_type_en_map = {
-        "当日汇总": "Daily Summary",
-        "当前榜单汇总": "Current Ranking",
+        "當日匯總": "Daily Summary",
+        "當前榜單匯總": "Current Ranking",
         "增量更新": "Incremental Update",
-        "实时增量": "Realtime Incremental", 
-        "实时当前榜单": "Realtime Current Ranking",  
+        "即時增量": "Realtime Incremental", 
+        "即時當前榜單": "Realtime Current Ranking",  
     }
     report_type_en = report_type_en_map.get(report_type, "News Report") 
 
@@ -4015,27 +4104,27 @@ class NewsAnalyzer:
     MODE_STRATEGIES = {
         "incremental": {
             "mode_name": "增量模式",
-            "description": "增量模式（只关注新增新闻，无新增时不推送）",
-            "realtime_report_type": "实时增量",
-            "summary_report_type": "当日汇总",
+            "description": "增量模式（只關注新增新聞，無新增時不推送）",
+            "realtime_report_type": "即時增量",
+            "summary_report_type": "當日匯總",
             "should_send_realtime": True,
             "should_generate_summary": True,
             "summary_mode": "daily",
         },
         "current": {
-            "mode_name": "当前榜单模式",
-            "description": "当前榜单模式（当前榜单匹配新闻 + 新增新闻区域 + 按时推送）",
-            "realtime_report_type": "实时当前榜单",
-            "summary_report_type": "当前榜单汇总",
+            "mode_name": "當前榜單模式",
+            "description": "當前榜單模式（當前榜單匹配新聞 + 新增新聞區域 + 按時推送）",
+            "realtime_report_type": "即時當前榜單",
+            "summary_report_type": "當前榜單匯總",
             "should_send_realtime": True,
             "should_generate_summary": True,
             "summary_mode": "current",
         },
         "daily": {
-            "mode_name": "当日汇总模式",
-            "description": "当日汇总模式（所有匹配新闻 + 新增新闻区域 + 按时推送）",
+            "mode_name": "當日匯總模式",
+            "description": "當日匯總模式（所有匹配新聞 + 新增新聞區域 + 按時推送）",
             "realtime_report_type": "",
-            "summary_report_type": "当日汇总",
+            "summary_report_type": "當日匯總",
             "should_send_realtime": False,
             "should_generate_summary": True,
             "summary_mode": "daily",
@@ -4289,9 +4378,9 @@ class NewsAnalyzer:
     def _generate_summary_report(self, mode_strategy: Dict) -> Optional[str]:
         """生成汇总报告（带通知）"""
         summary_type = (
-            "当前榜单汇总" if mode_strategy["summary_mode"] == "current" else "当日汇总"
+            "當前榜單匯總" if mode_strategy["summary_mode"] == "current" else "當日匯總"
         )
-        print(f"生成{summary_type}报告...")
+        print(f"生成{summary_type}報告...")
 
         # 加载分析数据
         analysis_data = self._load_analysis_data()
@@ -4331,7 +4420,7 @@ class NewsAnalyzer:
 
     def _generate_summary_html(self, mode: str = "daily") -> Optional[str]:
         """生成汇总HTML"""
-        summary_type = "当前榜单汇总" if mode == "current" else "当日汇总"
+        summary_type = "當前榜單匯總" if mode == "current" else "當日匯總"
         print(f"生成{summary_type}HTML...")
 
         # 加载分析数据
