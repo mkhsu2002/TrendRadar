@@ -1,6 +1,4 @@
-DeepSeek
-梁文锋
-
+# === 中國科技新創 ===
 华为
 鸿蒙
 任正非
@@ -11,77 +9,195 @@ DeepSeek
 大疆
 DJI
 
-宇树
+字节
+张一鸣
 
+小米
+雷军
+
+腾讯
+马化腾
+
+阿里巴巴
+马云
+
+百度
+李彦宏
+
+美团
+王兴
+
+# === 台灣產業 ===
+台積電
+TSMC
+台积电
+
+聯發科
+MediaTek
+联发科
+
+鴻海
+富士康
+Foxconn
+
+台灣半導體
+台湾半导体
+
+# === 北美科技新創 ===
+Apple
+蘋果
+苹果
+Tim Cook
+
+Meta
+Facebook
+扎克伯格
+
+Amazon
+亞馬遜
+亚马逊
+貝佐斯
+贝佐斯
+
+Netflix
+
+Uber
+
+Airbnb
+
+Tesla
+特斯拉
+马斯克
+
+Microsoft
+微软
+微軟
+Satya Nadella
+
+Google
+谷歌
+Sundar Pichai
+
+# === AI產業 ===
+AI
+人工智能
+人工智慧
+大模型
+LLM
+GPT
+生成式AI
+AGI
+多模態
+多模态
+
+ChatGPT
+OpenAI
+Sam Altman
+
+Claude
+Anthropic
+
+Gemini
+DeepMind
+deepmind
+
+DeepSeek
+梁文锋
+
+Sora
+
+Cohere
+Stability AI
+Midjourney
+
+機器學習
+机器学习
+深度學習
+深度学习
+神經網絡
+神经网络
+
+# === 自駕車與機器人 ===
+自動駕駛
+自动驾驶
+自駕車
+自驾车
+無人駕駛
+无人驾驶
+
+Waymo
+Cruise
+通用汽車
+通用汽车
+
+機器人
+机器人
+人形機器人
+人形机器人
+Boston Dynamics
+
+宇树
 智元
 灵犀
 稚晖君
 彭志辉
 
-影之刃零
-梁其伟
-
-字节
-张一鸣
-
-特斯拉
-马斯克
-
-微软
-Microsoft
-
-英伟达
+# === 半導體與硬體 ===
 NVIDIA
+英伟达
+英偉達
 黄仁勋
+黃仁勳
 
 AMD
 
-谷歌
-google
-gemini
-deepmind
+Intel
+英特爾
+英特尔
 
-chatgpt
-openai
-sora
+台積電
+TSMC
 
-claude
-Anthropic
+# === 世界財經 ===
+美股
+納斯達克
+纳斯达克
+NASDAQ
+道瓊
+道琼
+Dow Jones
+S&P 500
 
-iphone
-ipad
-mac
-ios
+Fed
+美聯儲
+美联储
+央行
+利率
+通膨
+通縮
+通缩
 
-ai
-人工智能
+財報
+财报
+季報
+季报
+IPO
+併購
+并购
+收購
+收购
+融資
+融资
+創投
+创投
+VC
+獨角獸
+独角兽
 
-自动驾驶
-
-机器人
-
-國產
-中國
-
-美國
-日本
-韓國
-
-芯片
-光刻机
-
-科技
-
+# === 其他科技熱點 ===
 核能
-
-水电站
-雅鲁藏布江
-
-新质生产力
-
 月球
 登月
-火星
-宇宙
-飞船
 航空
+太空
+SpaceX
